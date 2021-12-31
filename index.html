@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>	</title>
+	<meta charset="UTF-8">
+<meta name="description" content="Speech recognition">
+<meta name="keywords" content="HTML, CSS, JavaScript">
+<meta name="author" content="Preeti Patel">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<button id="startRecognition">Start Recognition</button>
+	<button id="stopRecognition">Stop Recognition</button>
+	<br>
+	<br>
+	<textarea cols="50" rows="50" id="txtArea"></textarea>
+	<script type="text/javascript">
+		$(function () {
+  try {
+    var recognition = new webkitSpeechRecognition();
+  } catch (e) {
+    var recognition = Object;
+  }
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.onresult = function (event) {
+    var txtRec = $('#txtArea').val();
+    for (var i = event.resultIndex; i < event.results.length; ++i) {
+      txtRec += event.results[i][0].transcript;
+    }
+    $('#txtArea').val(txtRec);
+  };
+  $('#startRecognition').click(function () {
+    $('#txtArea').focus();
+    recognition.start();
+  });
+  $('#stopRecognition').click(function () {
+    recognition.stop();
+  });
+});
+	</script>
+</body>
+</html>
